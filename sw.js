@@ -8,7 +8,8 @@ const assets = [
     '/css/styles.css',
     '/css/materialize.min.css',
     '/img/dish.png',
-    'https://fonts.googleapis.com/icon?family=Material+Icons'
+    'https://fonts.googleapis.com/icon?family=Material+Icons',
+    'https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2'
 ]
 //Install service worker
 self.addEventListener('install', evt => {
@@ -27,4 +28,9 @@ self.addEventListener('activate', evt => {
 })
 self.addEventListener('fetch', evt => {
     //console.log('Fetch Event',evt)
+    evt.respondWith(
+        caches.match(evt.request).then(cacheRes=>{
+            return cacheRes || fetch(evt.request);
+        })
+    )
 })
