@@ -49,19 +49,19 @@ self.addEventListener('activate', evt => {
 })
 self.addEventListener('fetch', evt => {
     //console.log('Fetch Event',evt)
-    evt.respondWith(
-        caches.match(evt.request).then(cacheRes => {
-            return cacheRes || fetch(evt.request).then(fetchRes=>{
-                return caches.open(dynamicCacheName).then(cache=>{
-                    cache.put(evt.request.url,fetchRes.clone());
-                    limitCacheSize(dynamicCacheName,3)
-                    return fetchRes
-                })
-            });
-        }).catch(()=>{
-            if(evt.request.url.indexOf('.html') > -1){
-                caches.match('/pages/fallback.html')
-            }
-        })
-    )
+    // evt.respondWith(
+    //     caches.match(evt.request).then(cacheRes => {
+    //         return cacheRes || fetch(evt.request).then(fetchRes=>{
+    //             return caches.open(dynamicCacheName).then(cache=>{
+    //                 cache.put(evt.request.url,fetchRes.clone());
+    //                 limitCacheSize(dynamicCacheName,3)
+    //                 return fetchRes
+    //             })
+    //         });
+    //     }).catch(()=>{
+    //         if(evt.request.url.indexOf('.html') > -1){
+    //             caches.match('/pages/fallback.html')
+    //         }
+    //     })
+    // )
 })
